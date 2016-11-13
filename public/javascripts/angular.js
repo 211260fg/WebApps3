@@ -2,7 +2,10 @@ var app = angular.module('flapperNews', []);
 
 app.controller('MainCtrl', [
     '$scope',
-    function($scope){
+    function ($scope) {
+
+
+        $scope.indextitle = 'Flapper News';
 
         $scope.posts = [
             {title: 'post 1', upvotes: 5},
@@ -12,15 +15,23 @@ app.controller('MainCtrl', [
             {title: 'post 5', upvotes: 4}
         ];
 
-        $scope.addPost = function(){
-            if(!$scope.title || $scope.title === '') {
+        $scope.addPost = function () {
+            if (!$scope.title || $scope.title === '') {
                 return;
             }
-            $scope.posts.push({title: $scope.title, upvotes: 0});
+            $scope.posts.push({
+                title: $scope.title,
+                link: $scope.link,
+                upvotes: 0
+            });
             $scope.title = '';
+            $scope.link = '';
         };
 
-        $scope.test = 'Hello world!';
+        $scope.incrementUpvotes = function (post) {
+            post.upvotes += 1;
+        };
+
 
 
 

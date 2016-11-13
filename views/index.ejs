@@ -6,18 +6,25 @@
   <script src="./javascripts/angular.js"></script>
 </head>
 <body ng-app="flapperNews" ng-controller="MainCtrl">
-<div>
-  {{test}}
-</div>
 
-<div ng-repeat="post in posts">
+<p>
+  <h1>{{indextitle}}</h1>
+</p>
+
+<div ng-repeat="post in posts | orderBy:'-upvotes'">
+  <a href="" ng-click="incrementUpvotes(post)">^</a>
   {{post.title}} - upvotes: {{post.upvotes}}
 </div>
 
+<p>
 <form ng-submit="addPost()">
-  <input type="text" ng-model="title"></input>
+  <input type="text" placeholder="Title" ng-model="title"/>
+  <br>
+  <input type="text" placeholder="Link" ng-model="link"/>
+  <br>
   <button type="submit">Post</button>
 </form>
+</p>
 
 </body>
 </html>
