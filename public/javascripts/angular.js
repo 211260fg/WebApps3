@@ -30,6 +30,8 @@ app.controller('MainCtrl', [
 
         $scope.indextitle = 'Flapper News';
 
+        //TODO switch posts
+
         $scope.posts = [
             {title: 'post 1', upvotes: 5},
             {title: 'post 2', upvotes: 2},
