@@ -4,9 +4,31 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
+
+
+var options = {
+    server: {socketOptions: {keepAlive: 300000, connectTimeoutMS: 30000}},
+    replset: {socketOptions: {keepAlive: 300000, connectTimeoutMS: 30000}}
+};
+
+mongoose.Promise = global.Promise;
+
+mongoose.connect("mongodb://flappernews:flappernews@ds157247.mlab.com:57247/webapps", options);
+
+mongoose.connection.on('open', function (ref) {
+    console.log('Connected to mongo server. Ready state: ' + mongoose.connection.readyState);
+});
+mongoose.connection.on('error', function (err) {
+    console.log('Connection to mongo server failed.');
+    console.log(err);
+});
+
+
+
 
 var app = express();
 
