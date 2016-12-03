@@ -29,8 +29,7 @@
     </div>
 
     <div ng-repeat="post in posts | orderBy:'-upvotes'">
-        <a href="" class="glyphicon glyphicon-thumbs-up"
-           ng-click="incrementUpvotes(post)"></a>
+        <a href="" class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></a>
         {{post.upvotes}}
         <span style="font-size:20px; margin-left:10px;">
           <a ng-show="post.link" href="{{post.link}}">
@@ -40,7 +39,7 @@
             {{post.title}}
           </span>
                 <span>
-      <a href="#/posts/{{$index}}">Comments</a>
+      <a href="#/posts/{{post._id}}">Comments</a>
     </span>
         </span>
     </div>
