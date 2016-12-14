@@ -156,7 +156,7 @@ app.factory('auth', ['$http', '$window', function ($http, $window) {
     };
 
     return auth;
-}])
+}]);
 
 
 app.controller('MainCtrl', [
@@ -164,7 +164,6 @@ app.controller('MainCtrl', [
     'posts',
     'auth',
     function ($scope, posts, auth) {
-
 
         $scope.indextitle = 'Flapper News';
         $scope.posts = posts.posts;
@@ -186,6 +185,20 @@ app.controller('MainCtrl', [
             posts.upvote(post);
         };
 
+    }]);
+
+app.controller('PostsCtrl', [
+    '$scope',
+    '$stateParams',
+    'posts',
+    'post',
+    'auth',
+    function ($scope, $stateParams, posts, post, auth) {
+
+        $scope.post = post;
+        //$scope.post = posts.posts[$stateParams.id];
+        $scope.isLoggedIn = auth.isLoggedIn;
+
         $scope.addComment = function () {
             if ($scope.body === '') {
                 return;
@@ -198,37 +211,11 @@ app.controller('MainCtrl', [
             });
             $scope.body = '';
         };
-
-        $scope.incrementUpvotes = function(comment){
-         posts.upvoteComment(post, comment);
-         };
-
-    }]);
-
-app.controller('PostsCtrl', [
-    '$scope',
-    '$stateParams',
-    'posts',
-    'post',
-    'auth',
-    function ($scope, $stateParams, posts) {
-
-        $scope.post = post;
-        //$scope.post = posts.posts[$stateParams.id];
-        $scope.isLoggedIn = auth.isLoggedIn;
-
-        $scope.addComment = function () {
-            if ($scope.body === '') {
-                return;
-            }
-            $scope.post.comments.push({
-                body: $scope.body,
-                author: 'user',
-                upvotes: 0
-            });
-            $scope.body = '';
+        $scope.incrementUpvotes = function (comment) {
+            posts.upvoteComment(post, comment);
         };
-    }]);
+    }]
+);
 
 
 app.controller('AuthCtrl', [
