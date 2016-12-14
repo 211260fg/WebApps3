@@ -39,6 +39,36 @@ router.post('/login', function(req, res, next){
 });
 
 
+router.get('/users', function(req, res, next) {
+    User.find(function(err, users){
+        if(err){ return next(err); }
+
+        res.json(users);
+    });
+});
+
+
+router.get('/users/:user', function(req, res) {
+        res.json(req.user);
+});
+
+
+router.param("user", function(request, response, next, id) {
+    var query = User.findById(id);
+
+    query.exec(function(err, user) {
+        if (err) {
+            return next(err);
+        }
+
+        if (!user) {
+            return next(new Error("can't find user"));
+        }
+
+        request.user = user;
+        return next();
+    });
+});
 
 
 module.exports = router;

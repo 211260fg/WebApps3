@@ -29,6 +29,17 @@ app.config([
                 }
             });
 
+        $stateProvider.state('users', {
+            url: '/users/{id}',
+            templateUrl: '/user.html',
+            controller: 'UserCtrl',
+            resolve: {
+                user: ['$stateParams', 'user', function ($stateParams, user) {
+                    return user.get($stateParams.id);
+                }]
+            }
+        });
+
         $stateProvider.state('login', {
             url: '/login',
             templateUrl: '/login.html',
@@ -38,7 +49,7 @@ app.config([
                     $state.go('home');
                 }
             }]
-        })
+        });
 
         $stateProvider.state('register', {
             url: '/register',
@@ -125,6 +136,21 @@ app.factory('posts', ['$http', 'auth', function ($http, auth) {
     return o;
 }]);
 
+app.factory('user', ['$http', '$window', function ($http, $window) {
+    var user = {
+        user: []
+    };
+
+    user.get = function (id) {
+        return $http.get('/users/' + id).then(function (res) {
+            return res.data;
+        });
+    };
+
+    return user;
+}]);
+
+
 app.factory('auth', ['$http', '$window', function ($http, $window) {
     var auth = {};
 
@@ -154,6 +180,16 @@ app.factory('auth', ['$http', '$window', function ($http, $window) {
             var payload = JSON.parse($window.atob(token.split('.')[1]));
 
             return payload.username;
+        }
+    };
+
+
+    auth.currentUserId = function () {
+        if (auth.isLoggedIn()) {
+            var token = auth.getToken();
+            var payload = JSON.parse($window.atob(token.split('.')[1]));
+
+            return payload._id;
         }
     };
 
@@ -244,6 +280,25 @@ app.controller('PostsCtrl', [
 );
 
 
+app.controller('UserCtrl', [
+    '$scope',
+    '$stateParams',
+    'users',
+    'user',
+    'auth',
+    function ($scope, $stateParams, users, user, auth) {
+
+        $scope.users = user;
+        //$scope.post = posts.posts[$stateParams.id];
+        $scope.isLoggedIn = auth.isLoggedIn;
+
+        $scope.currentUser = auth.currentUser();
+
+        $scope.currentUserId = auth.currentUserId();
+    }]
+);
+
+
 app.controller('AuthCtrl', [
     '$scope',
     '$state',
@@ -274,5 +329,6 @@ app.controller('NavCtrl', [
     function ($scope, auth) {
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.currentUser = auth.currentUser;
+        $scope.currentUserId = auth.currentUserId;
         $scope.logOut = auth.logOut;
     }]);
