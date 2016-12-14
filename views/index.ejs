@@ -10,10 +10,6 @@
     <script src="/javascripts/angular-ui-router.js"></script>
     <!--<script src="http://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/0.2.10/angular-ui-router.js"></script>-->
 
-    <style> .glyphicon-thumbs-up {
-            cursor: pointer
-        } </style>
-
 </head>
 
 <body ng-app="flapperNews">
@@ -43,6 +39,7 @@
     <div ng-repeat="post in posts | orderBy:'-upvotes'">
         <a href="" class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(post)"></a>
         {{post.upvotes}}
+        <a href="" class="glyphicon glyphicon-thumbs-down" ng-click="decrementUpvotes(post)"></a>
         <span style="font-size:20px; margin-left:10px;">
           <a ng-show="post.link" href="{{post.link}}">
             {{post.title}}
@@ -76,7 +73,8 @@
     </form>
 
     <div ng-hide="isLoggedIn()">
-        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.</h3>
+        <h3>You need to <a href="/#/login">Log In</a> or <a href="/#/register">Register</a> before you can add a post.
+        </h3>
     </div>
 </script>
 
@@ -94,9 +92,9 @@
     </div>
 
     <div ng-repeat="comment in post.comments | orderBy:'-upvotes'">
-    <span class="glyphicon glyphicon-thumbs-up"
-          ng-click="incrementUpvotes(comment)"></span>
+        <span class="glyphicon glyphicon-thumbs-up" ng-click="incrementUpvotes(comment)"></span>
         {{comment.upvotes}} - by {{comment.author}}
+        <span class="glyphicon glyphicon-thumbs-down" ng-click="decrementUpvotes(comment)"></span>
         <span style="font-size:20px; margin-left:10px;">
       {{comment.body}}
     </span>
