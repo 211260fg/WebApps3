@@ -18,8 +18,10 @@ describe('GET /posts', function() {
 
                 var post = fetchedData[0];
                 if (post) {
-                    expect(post).to.have.all.keys('_id','__v', 'comments', 'upvotes', 'title', 'link', 'author', 'datetime');
+                    expect(post).to.have.all.keys('_id','__v', 'comments', 'upvotes', 'userswhoupvoted', 'userswhodownvoted','title', 'link', 'author', 'datetime');
                     expect(post.comments).to.be.an('array');
+                    expect(post.usersWhoDownvoted).to.be.an('array');
+                    expect(post.usersWhoUpvoted).to.be.an('array');
                     expect(post.upvotes).to.be.a('number');
 
                 }
