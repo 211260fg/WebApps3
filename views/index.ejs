@@ -55,7 +55,7 @@
           <span ng-hide="post.link">
             {{post.title}}
           </span>
-            <span ng-show="post.author">posted by <a>{{post.author}}</a> |</span>
+            <span ng-show="post.author">posted by <a href="#/user/{{post.author}}">{{post.author}}</a> |</span>
             <span> <a href="#/posts/{{post._id}}">Comments</a> </span>
         </span>
     </div>
@@ -165,11 +165,14 @@
             <input type="password"
                    class="form-control"
                    placeholder="Password"
-                   ng-model="user.password"></input>
+                   ng-model="user.password"
+                   id="password"></input>
         </div>
+
         <button type="submit" class="btn btn-primary">Register</button>
     </form>
 </script>
+
 
 
 <script type="text/ng-template" id="/login.html">
