@@ -32,12 +32,18 @@ app.config([
         $stateProvider.state('users', {
             url: '/users/{id}',
             templateUrl: '/user.html',
-            controller: 'UserCtrl',
+            controller: 'NavCtrl',
             resolve: {
                 user: ['$stateParams', 'user', function ($stateParams, user) {
                     return user.get($stateParams.id);
                 }]
             }
+        });
+
+        $stateProvider.state('profile', {
+            url: '/profile',
+            templateUrl: '/user.html',
+            controller: 'NavCtrl'
         });
 
         $stateProvider.state('login', {
@@ -179,17 +185,7 @@ app.factory('auth', ['$http', '$window', function ($http, $window) {
             var token = auth.getToken();
             var payload = JSON.parse($window.atob(token.split('.')[1]));
 
-            return payload.username;
-        }
-    };
-
-
-    auth.currentUserId = function () {
-        if (auth.isLoggedIn()) {
-            var token = auth.getToken();
-            var payload = JSON.parse($window.atob(token.split('.')[1]));
-
-            return payload._id;
+            return payload;
         }
     };
 
@@ -288,13 +284,11 @@ app.controller('UserCtrl', [
     'auth',
     function ($scope, $stateParams, users, user, auth) {
 
-        $scope.users = user;
+        $scope.user = user;
         //$scope.post = posts.posts[$stateParams.id];
         $scope.isLoggedIn = auth.isLoggedIn;
 
         $scope.currentUser = auth.currentUser();
-
-        $scope.currentUserId = auth.currentUserId();
     }]
 );
 
@@ -321,7 +315,7 @@ app.controller('AuthCtrl', [
                 $state.go('home');
             });
         };
-    }])
+    }]);
 
 app.controller('NavCtrl', [
     '$scope',
@@ -329,6 +323,5 @@ app.controller('NavCtrl', [
     function ($scope, auth) {
         $scope.isLoggedIn = auth.isLoggedIn;
         $scope.currentUser = auth.currentUser;
-        $scope.currentUserId = auth.currentUserId;
         $scope.logOut = auth.logOut;
     }]);

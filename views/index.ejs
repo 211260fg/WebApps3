@@ -22,7 +22,7 @@
             <span>Home</span>
         </a>
         <ul class="nav navbar-nav pull-right">
-            <li ng-show="isLoggedIn()"><a href="/#/users/{{currentUserId()}}">{{ currentUser()}}</a></li>
+            <li ng-show="isLoggedIn()"><a href="/#/profile">{{ currentUser().username}}</a></li>
             <li ng-show="isLoggedIn()"><a href="" ng-click="logOut()">Log Out</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/login">Log In</a></li>
             <li ng-hide="isLoggedIn()"><a href="/#/register">Register</a></li>
@@ -137,7 +137,7 @@
 
 <script type="text/ng-template" id="/user.html">
     <div class="page-header">
-            <h1>{{username}}</h1>
+            <h1>{{currentUser().username}}</h1>
     </div>
 </script>
 
