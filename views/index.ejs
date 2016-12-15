@@ -91,12 +91,13 @@
 <script type="text/ng-template" id="/posts.html">
     <div class="page-header">
         <h3>
-            <a ng-show="post.link" href="{{post.link}}">
+            <a ng-show="post.link" href="{{post.link}}" target="_blank">
                 {{post.title}}
             </a>
-            <span ng-hide="post.link">
-        {{post.title}}
-      </span>
+            <span ng-hide="post.link">{{post.title}}</span> <br/>
+            <span style="font-size:18px;">
+                <a ng-show="post.author" href="#/user/{{post.author}}">{{post.author}}</a> - {{post.datetime}}
+            </span>
         </h3>
     </div>
 
@@ -110,7 +111,8 @@
         </span>
         <br/>
         <span style="font-size:12px; margin-left:10px">
-             - by {{comment.author}}
+            <a ng-show="post.author" href="#/user/{{post.author}}">{{comment.author}}</a>
+            <span ng-show="comment.datetime">- {{comment.datetime}}</span>
         </span>
 
     </div>
