@@ -49,14 +49,15 @@
         {{post.upvotes}}
         <a href="" class="glyphicon glyphicon-thumbs-down" ng-click="decrementUpvotes(post)"></a>
         <span style="font-size:20px; margin-left:10px;">
-          <a ng-show="post.link" href="{{post.link}}">
+          <a ng-show="post.link" href="{{post.link}}" target="_blank">
             {{post.title}}
           </a>
           <span ng-hide="post.link">
             {{post.title}}
           </span>
             <span ng-show="post.author">posted by <a href="#/user/{{post.author}}">{{post.author}}</a> |</span>
-            <span> <a href="#/posts/{{post._id}}">Comments</a> </span>
+            <span style="font-size:16px;"> <a href="#/posts/{{post._id}}">Comments</a></span>
+            <span ng-if="post.datetime" style="font-size:14px;"> - {{post.datetime}}</span>
         </span>
     </div>
 

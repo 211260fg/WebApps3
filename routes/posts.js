@@ -18,6 +18,7 @@ router.get('/posts', function(req, res, next) {
 router.post('/posts', auth, function(req, res, next) {
     var post = new Post(req.body);
     post.author = req.payload.username;
+    post.datetime = getDateTime();
 
     post.save(function(err, post){
         if(err){ return next(err); }
@@ -108,5 +109,30 @@ router.param('comment', function(req, res, next, id) {
     });
 });
 
+
+function getDateTime() {
+
+    var date = new Date();
+
+    var hour = date.getHours();
+    hour = (hour < 10 ? "0" : "") + hour;
+
+    var min  = date.getMinutes();
+    min = (min < 10 ? "0" : "") + min;
+
+    var sec  = date.getSeconds();
+    sec = (sec < 10 ? "0" : "") + sec;
+
+    var year = date.getFullYear();
+
+    var month = date.getMonth() + 1;
+    month = (month < 10 ? "0" : "") + month;
+
+    var day  = date.getDate();
+    day = (day < 10 ? "0" : "") + day;
+
+    return day +"/"+month+"/"+year;
+
+}
 
 module.exports = router;
