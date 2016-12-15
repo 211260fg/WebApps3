@@ -4,9 +4,9 @@ var request = require('supertest');
 
 var agent = request.agent(app);
 
-describe('GET /posts', function() {
+describe('GET /users', function() {
     it('should respond with 200 in case of valid request', function(done) {
-        agent.get('/posts')
+        agent.get('/users')
             .send()
             .end(function(err, res) {
                 if (err) {
@@ -16,16 +16,11 @@ describe('GET /posts', function() {
                 expect(fetchedData).to.be.an('array');
                 expect(fetchedData).to.not.empty;
 
-                var post = fetchedData[0];
-                if (post) {
-                    expect(post).to.have.all.keys('_id','__v', 'comments', 'upvotes', 'title', 'link', 'author', 'datetime');
-                    expect(post.comments).to.be.an('array');
-                    expect(post.upvotes).to.be.a('number');
-
+                var user = fetchedData[0];
+                if (user) {
+                    expect(user).to.have.all.keys('_id', '__v', 'username', 'hash', 'salt');
                 }
                 done();
             });
     });
 });
-
-
